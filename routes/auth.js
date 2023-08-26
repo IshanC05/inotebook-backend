@@ -11,8 +11,14 @@ require('dotenv').config()
 const JWT_SECRET = `${process.env.REACT_APP_JWT_SECRET}`;
 
 router.get('/check', async (req, res) => {
-
     return res.status(200).json({ "message": "Hello" });
+})
+
+router.get('/getAllUsers', async (req, res) => {
+
+    let user = await User.find();
+
+    return res.json(user);
 
 })
 
