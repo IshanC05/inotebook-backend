@@ -3,6 +3,8 @@ require('dotenv').config()
 
 const mongoURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@inotebook-db.p5vptoq.mongodb.net/?retryWrites=true&w=majority`
 
+// const mongoURI = 'mongodb://0.0.0.0:27017/inotebook'
+
 const connectToMongo = async () => {
 
     try {
