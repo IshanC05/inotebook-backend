@@ -129,4 +129,43 @@ router.post('/getuser', fetchUser, async (req, res) => {
 });
 
 
+// Route 4: Update name
+// PUT route to update user's name by ID
+router.put('/updatename/:id', fetchUser, async (req, res) => {
+    try {
+        // Extract the new name from the request body
+        const { name } = req.body;
+
+        if (!name) {
+            return res.status(400).json({ error: 'Name cannot be empty' });
+        }
+
+        // console.log(req.body);
+        const userId = req.user.id;
+
+        // Create a new user object with the updated name
+        const updatedUser = {
+            name: name
+        };
+
+        // Update user's data in the database using async/await
+        const updatedDoc = await User.findByIdAndUpdate(userId, updatedUser, { new: true });
+
+        if (!updatedDoc) {
+            return res.status(500).json({ error: 'Update failed' });
+        }
+
+        updatedDoc.password = null
+
+        // console.log('Updated User:', updatedDoc);
+        return res.status(200).json({ message: 'User name updated successfully', user: updatedDoc });
+
+    } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+
 module.exports = router;
